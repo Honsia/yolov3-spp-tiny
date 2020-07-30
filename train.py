@@ -100,7 +100,7 @@ def train(
         del chkpt
 
     else:  # Initialize model with backbone (optional)
-        chkpt = torch.load('weights/' + 'yolov3-IEEEspp.pt')
+        chkpt = torch.load('weights/' + 'yolov3-tiny.conv.15')
         model.load_state_dict({k: v for i, (k, v) in enumerate(chkpt['model'].items()) if v.numel() > 1 
                       and i < 263  }, strict=False)    # First 1024 shown up layer and before
 
@@ -303,10 +303,11 @@ def print_mutation(hyp, results):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--epochs', type=int, default=400, help='number of epochs')
-    parser.add_argument('--batch-size', type=int, default=16, help='batch size')
-    parser.add_argument('--accumulate', type=int, default=8, help='number of batches to accumulate before optimizing')
-    parser.add_argument('--cfg', type=str, default='cfg/yolov3-spp-tiny.cfg', help='cfg file path')
-    parser.add_argument('--data-cfg', type=str, default='data/IEEE.data', help='coco.data file path')
+    parser.add_argument('--batch-size', type=int, default=2, help='batch size')
+    parser.add_argument('--accumulate', type=int, default=4, help='number of batches to accumulate before optimizing')
+    parser.add_argument('--cfg', type=str, default='cfg/yolov3-tiny.cfg', help='cfg file path')
+    parser.add_argument('--weights', type=str, default='weights/yolov3-tiny.conv.15', help='cfg file path')
+    parser.add_argument('--data-cfg', type=str, default='/Users/lele/pro-lib/yolov3-spp-tiny/data/honsia-data/face-mask.data', help='coco.data file path')
     parser.add_argument('--single-scale', action='store_true', help='train at fixed size (no multi-scale)')
     parser.add_argument('--img-size', type=int, default=416, help='inference size (pixels)')
     parser.add_argument('--resume', action='store_true', help='resume training flag')
